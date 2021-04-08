@@ -1,157 +1,250 @@
 # Boton de Enviar
 
+![imagen boton](https://raw.githubusercontent.com/johnbeto20/BotonEnviar/main/img_Readme/elemento-animado.gif)
+
 Este es un boton diseñado desde cero, me llama la atención realizar estos diseños propuestos desde animaciones y pasarlos a un formato limpio en HTML y CSS.
 
-1. Para la construcción de este elemento es necesario tener un boton en html,
+1. Para la construcción de este elemento es necesario tener un <b>botón</b> en html, pero antes, este botón debe estar dentro de un <b>contenedor</b> que va a contener nuestros elementos.
 
 ````html
-<button class="btn" id="boton">Enviar!</button>
+<div class="button">
+    <button class="btn" id="boton">Enviar!</button>
+    <!--Acá van los elementos que vamos a mostrar de a poquito.-->
+</div>
 ````
 
-2. Luego le aplico los estilos al gusto.
-
-![imagen boton](https://raw.githubusercontent.com/johnbeto20/pildoritas-css-botonSend/master/img_Readme/btn-enviar.jpg)
-
-3. Conseguiremos dos imagenes (en png o SVG) donde mostraremos el icono principal y el icono final.
-
-Imagen principal
-
-![imagen inicial](https://raw.githubusercontent.com/johnbeto20/pildoritas-css-botonSend/master/img_Readme/ico-send.jpg)
-
-Imagen final
-
-![imagen final](https://raw.githubusercontent.com/johnbeto20/pildoritas-css-botonSend/master/img_Readme/ico-done.jpg)
-
-4. tenemos que tener en cuenta que la estructura de nuestro botón podría cambiar, entonces maquetamos acorde a lo que queremos controlar, con una separación, 'esa es la clave'.
-
-````html
-<button class="btn" id="btn">
-    <div class="cont-image">
-        <img id="icoFligh" src="ico-fligh.svg" alt="icono enviar"/>
-    </div>
-    <div class="cont-image-check" id="icoCheck">
-        <img src="ico-check.svg" alt="icono final">
-    </div>
-    <span class="btn__text">Enviar</span>
-    <span class="btn__text-2">Done</span>
-</button>
-````
-5. Ajustamos por estilos la parte principal, la imagen que lo contiene la clase: **"class="cont-image"** y el texto que lo contiente la siguiente clase: **"class="btn__text"**, así tendríamos algo así:
-
-![imagen enviar final](https://raw.githubusercontent.com/johnbeto20/pildoritas-css-botonSend/master/img_Readme/boton-enviar-finish.jpg)
-
-## Animar el icono del avioncito.
-
-Para esta parte hay un detalle coqueto donde utilicé un **:after** y un **:before** dentro del contenedor con la clase: **cont-image**
+Luego le aplico los estilos al gusto, pero hay unos clave para que pueda funcionar lo que queremos lograr.
 
 ````css
-.cont-image:after, .cont-image:before {
-    display: block;
-    content: "";
-    width: 10px;
-    height: 4px;
-    border-radius: 2px;
-    background: #fff;
+/*El contenedor puede tener un alto y un alto según como se necesite, y con una posición relativa.*/
+.button {
+    position: relative;
+    width: 190px;
+    height: 60px;
+}
+
+/*El botón debe estar en una posición absoluta.*/
+.button button {
     position: absolute;
-    top: 12px;
-    right: 100%;
 }
-````
-quedaría algo así, pero le agregamos una **opacidad** de **0** para no mostrarlo al principio.
-![imagen lineas del avion](https://raw.githubusercontent.com/johnbeto20/pildoritas-css-botonSend/master/img_Readme/image-avion-con-lineas.jpg)
 
-Aparte agregamos las animaciónes respectivas, esto ya sería como queremos animarlo (En el repositorio estará la base de animación inicial):
+/*El reflow y repaint lo aplicas a tu gusto ;) */
+
+````
+
+![imagen boton](https://raw.githubusercontent.com/johnbeto20/BotonEnviar/main/img_Readme/paso-1.png)
+
+2. tenemos que tener en cuenta que la estructura de nuestro botón podría cambiar, entonces maquetemos acorde a lo que queremos controlar, con una separación <b>"esa es la clave"</b>.
+
+````html
+<div class="button">
+    <button id="start">...</button>
+    <span id="fligh" class="icon-fligh">...</div>
+    <div id="answer" class="answer">...</div>
+</div>
+````
+
+3. agregamos los elementos que nos hacen falta, que sería, el icono del avioncito de papel, y el mensaje que dice "enviado", acompañado de un icono de confirmación.
+
+````html
+<!--Icono del avioncito en SVG con clase icon-fligh-->
+<span id="fligh" class="icon-fligh">
+    <svg viewBox="0 0 72 59.7">
+        <g id="Group_3_1_" transform="translate(-186 -162.933)">
+            <path id="Path_1_1_" class="st1" d="M186,162.9l72,19.5l-72,33.1l6.1-25.8l26.6-4.6l-26.6-1.5L186,162.9z"/>
+            <path id="Path_2_1_" class="st1" d="M202.4,211.6l28.7-12.4l-28.7,23.5L202.4,211.6z"/>
+        </g>
+    </svg>
+</span>
+<!--Frase con el texto de validación con un icono en SVG con la clase answer-->
+<div id="answer" class="answer">
+    <span class="icon-after">
+        <svg viewBox="0 0 38.7 28.9">
+            <path id="Path_3_1_" class="st0" d="M3,16.5l9,9.3L35.7,3"/>
+        </svg>
+    </span>
+    <span class="text-after">Enviado</span>
+</div>
+````
+
+Imagene de los elementos
+
+![imagen elementos](https://raw.githubusercontent.com/johnbeto20/BotonEnviar/main/img_Readme/paso-2.png)
+
+4. Ahora vamos a colocar answer y el botón con **position: absolute** para manejar los elementos que vamos a mover libremente.
 
 ````css
-.active .cont-image img {
-    animation: goMove 1s ease-in forwards;
+.button .icon-fligh {
+    position: absolute;
 }
 
-.active .cont-image:after, .active .cont-image:before {
-    animation: opacityLines 0.8s ease-in forwards;
+.button button {
+    position: absolute;
 }
 
-.active .btn__text {
-    animation: recorText .1s ease-in forwards .7s;
-}
 ````
 
-## Animar la parte donde se ejecuta la acción final... el chulito.
+![imagen boton elementos ocultos](https://raw.githubusercontent.com/johnbeto20/BotonEnviar/main/img_Readme/paso-3.png)
 
-Para esto la clave esta en manejar el **delay** en las animaciones, o utilizar el "animationEnd" en javascript apenas se termine la animación principal aplicada, pero sería a tu gusto, ya que esta animación final comienza justo cuando la inicial ni siquiera ha terminado, entonces como inicia a destiempo utilicé el **delay**.
+5. Para la clase answer vamos a realizar un modo donde podamos mantener el texto oculto, ya que haremos que le texto se muestre como una mascara.
 
 ````css
-.active .cont-image-check img {
-    animation: moveCheck .5s ease-in forwards;
-}
-
-.active .btn__text-2 {
-    animation: recorText .1s ease-in forwards 1.4s reverse;
-}
-
-.btn.active {
-    animation: transformCircle 1s ease-in forwards .5s;
+.button .answer {
+    overflow: hidden;
+    width: 0;
 }
 ````
 
-y en javascript agregué que cuando se inicie la animación se muestre el icono final. 
-
-````javascript
-btn.addEventListener("animationstart", function(){
-    setTimeout(function(){
-        icoCheck.style.display ="inline-block"
-    },950)
-})
+Para l icono del check con clase **icon-after** lo utilizaremos en SVG.
+````html
+<span class="icon-after">
+    <svg viewBox="0 0 38.7 28.9">
+        <path id="Path_3_1_" class="st0" d="M3,16.5l9,9.3L35.7,3"/>
+    </svg>
+</span>
 ````
 
-## Animar el contenedor
+Y aplicaremos estilos visuales para generar su linea
 
-Este me pareció retador, ya que tuve que modificarlo para que los elementos por dentro no se alteraran por la estructura:
+````css
+.button .st0 {
+    fill: none;
+    stroke: #00FF11;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 4;
+}
+````
+
+Para el icono tendríamos que colocarlo en pocisión absolute, para tener un mejor control sobre él, y centrarlo de esta manera y adicional reducir el tamaño por medio de estilos.
 
 ````css
 
-.btn.active {
-    animation: transformCircle 1s ease-in forwards .5s;
+.button .icon-fligh {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 60px;
+    height: 50px;
+    width: 60px;
+    height: 50px;
 }
 
-@keyframes transformCircle {
+````
+
+## construyamos las animaciones
+
+6. ya  sabemos que elementos se van a animar, ahora construyamos por partes esas animaciones, revisemos la animación y veamos los elementos, a partir de eso podemos generar nuestras animaciones.
+
+````css
+/*Animación para nuestro boton, usamos un "transform" para moverlo a la dirección que se necesita*/
+@keyframes moveBtn {
     0% {
-        width: 200px;
-        padding: 0 45px;
-    }
-    25% {
-        width: 70px;
-        padding: 0;
-    }
-    75% {
-        width: 70px;
-        padding: 0;
-        background-color: var(--color-btn);
+        transform: translate(0, 0);
+        opacity: 1;
     }
     100% {
-        background-color: var(--color-ok);
-        width: 200px;
-        padding: 0 45px;
+        transform: translate(-150px, 0);
+        opacity: 0;
     }
+}
+
+/*activando la animación, agregandoselo a una clase que lo realize, esta clase se la agregaremos por medio de javascript*/
+.moveBtn {
+    animation: moveBtn 1s ease forwards;
+}
+
+/*Animación para nuestro avioncito, usamos un "transform" para moverlo a la dirección que se necesita*/
+@keyframes movefligh {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(200px, 0);
+        opacity: 0;
+    }
+}
+
+/*activando la animación, agregandoselo a una clase que lo realize, esta clase se la agregaremos por medio de javascript*/
+.movefligh {
+    animation: movefligh 1s ease forwards;
+}
+
+/*¿se acuerdan de la mascara realizada con el overflow y el width?, Bueno... esto lo vamos a animar*/
+@keyframes maskLetter {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 120px;
+    }
+}
+
+/*activando la animación, agregandoselo a una clase que lo realize, esta clase se la agregaremos por medio de javascript*/
+.maskLetter {
+    animation: maskLetter 0.5s ease forwards;
+    animation-delay: 0.05s;
+}
+
+/*Acá estamos utilizando un recurso para SVG en CSS que nos permite dibujar las lineas y generar un efecto de trazo, lo ideal es que el stroke-dasharray separe entre lineas el elemento y también su ampliación, y el stroke-dashoffset define desde donde inicia el efecto, sabiendo esto sólo animaremos el stroke-dashoffset para moverlo de un estado a otro*/
+@keyframes draw {
+    0% {
+        stroke-dasharray: 50;
+        stroke-dashoffset: 50;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/*activando la animación, agregandoselo a una clase que lo realize, esta clase se la agregaremos por medio de javascript*/
+.draw {
+    animation: draw 1s ease forwards;
+    animation-delay: 0.25s;
 }
 ````
 
-## Uniendo las partes.
+es bueno tener esto por separado para saber que vamos a utilizar
 
-6. despues de tener todo construido a nuestro gusto es momento de agregar las animaciones para que todo se ejecute en cadena, ¿se acuerdan que mis clases tienen un **.active**: al principio, bueno, es la funcioncita de javascript para que el botón se active
-```javascript
+## vamos para el Javascript.
 
-var icoFligh = document.getElementById("icoFligh")
-var btn = document.getElementById("btn")
-var icoCheck = document.getElementById("icoCheck")
+7. En el javascipt llamamos a los elementos con los que vamos a interactuar **"a los elementos también les agregué un id con el mismo nombre, esto con el fin de que utilicemos los id para temas de programación y las clases para la parte de estilos"**.
 
-btn.addEventListener("click", function() {
-    this.classList.add("active");
-})
-
+````javascript
+const btn = document.getElementById("start");
+const Fligh = document.getElementById("fligh");
+const Answer = document.getElementById("answer");
+const Line = document.getElementById("Path_3_1_");
 ````
 
-Al ejecutarlo las animaciones comenzarán a funcionar, pueden ver el [Demo aquí](https://johnbeto20.github.io/pildoritas-css-botonSend/)
+8. llamamos al activador de la acción que es el **btn**
+````javascript
+btn.addEventListener("click", function() {})
+````
+
+9. dentro de la función aplicamos el llamado a las clases que agregamos para las animaciones, ¿Las recuerdan?
+
+````javascript
+btn.addEventListener("click", function() {
+    this.classList.add("moveBtn")
+    this.addEventListener('animationend', () => {
+        Fligh.classList.add("movefligh");
+        Answer.classList.add("maskLetter");
+        Answer.addEventListener('animationend', () => {
+            Line.classList.add("draw");
+        });;
+    });
+})
+````
+
+el **animationend** lo estoy utilizando para identificar que pasa cuando la animación termine, cuando termine ejecuto la otra animación para los demas elementos, esto con el fin de tener un orden de secuenda de mis elementos a animar.
+
+Al ejecutarlo las animaciones comenzarán a funcionar, pueden ver el [Demo aquí](https://johnbeto20.github.io/BotonEnviar/)
 
 En conclusión:
 
