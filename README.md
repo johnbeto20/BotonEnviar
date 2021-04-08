@@ -249,7 +249,6 @@ Al ejecutarlo las animaciones comenzarán a funcionar, pueden ver el [Demo aquí
 En conclusión:
 
 * Fijarnos en que tan detallado queremos que sea nuestra animación. 
-* Utilicemos los **delay** para seguir una secuencia.
 * el **transform** es un buen aliado.
 
 Si lo ven, son experimentos de como podría ser una construcción de este botón, si encuentran otra forma diferente de hacerlo sería aagradable compartir el conocimiento.
